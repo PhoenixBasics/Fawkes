@@ -13,7 +13,7 @@ defmodule Fawkes.Schedule.Speaker do
     field :last, :string
     field :slug, :string
     field :twitter, :string
-    field :talk_id, :id
+    belongs_to :talk, Fawkes.Schedule.Talk
 
     timestamps()
   end
@@ -21,8 +21,8 @@ defmodule Fawkes.Schedule.Speaker do
   @doc false
   def changeset(speaker, attrs) do
     speaker
-    |> cast(attrs, [:slug, :image, :image_url, :first, :last, :company, :github, :twitter, :description])
-    |> validate_required([:slug, :image, :image_url, :first, :last, :company, :github, :twitter, :description])
+    |> cast(attrs, [:slug, :image, :image_url, :first, :last, :company, :github, :twitter, :description, :talk_id])
+    |> validate_required([:slug, :image_url, :first, :last])
     |> unique_constraint(:slug)
   end
 end
