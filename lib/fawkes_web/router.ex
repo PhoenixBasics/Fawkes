@@ -13,8 +13,22 @@ defmodule FawkesWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :guardian do
+    plug FawkesWeb.Guardian.Plug
+    plug FawkesWeb.Guardian.CurrentUserPlug
+  end
+
+  pipeline :ensure_auth do
+    plug Guardian.Plug.EnsureAuthenticated
+  end
+
   scope "/", FawkesWeb do
-    pipe_through :browser # Use the default browser stack
+    pipe_through [:browser, :guardian, :ensure_auth]
+    post("/logout", Auth.UserController, :delete)
+  end
+
+  scope "/", FawkesWeb do
+    pipe_through [:browser, :guardian]
     get "/about", PageController, :about
 
     get "/", PageController, :index
@@ -32,13 +46,13 @@ defmodule FawkesWeb.Router do
   end
 
   scope "/signup", FawkesWeb.Signup, as: :signup do
-    pipe_through :browser
+    pipe_through [:browser, :guardian]
 
     resources "/", UserController, only: [:new, :create]
   end
 
   scope "/login", FawkesWeb.Auth, as: :auth do
-    pipe_through :browser
+    pipe_through [:browser, :guardian]
 
     resources "/", UserController, only: [:new, :create]
   end
