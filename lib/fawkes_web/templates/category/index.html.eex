@@ -14,7 +14,10 @@
       <tr>
         <td><%= category.name %></td>
         <td><%= category.slug %></td>
-        <td><a href="/categories/<%= category.id %>">Show</a></td>
+        <td>
+          <a href="/categories/<%= category.id %>">Show</a>
+          <%= link "Delete", to: category_path(@conn, :delete, category), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+        </td>
       </tr>
   <% end %>
   </tbody>

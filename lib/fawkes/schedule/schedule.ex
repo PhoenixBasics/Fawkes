@@ -19,4 +19,10 @@ defmodule Fawkes.Schedule do
   def get_category!(id) do
     Repo.get!(Category, id)
   end
+
+  def delete_category(id) do
+    id
+    |> get_category!()
+    |> Repo.delete()
+  end
 end

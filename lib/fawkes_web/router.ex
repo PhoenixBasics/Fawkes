@@ -21,6 +21,7 @@ defmodule FawkesWeb.Router do
     get "/categories/new", CategoryController, :new
     post "/categories", CategoryController, :create
     get "/categories/:id", CategoryController, :show
+    delete "/categories/:id", CategoryController, :delete
     get "/categories", CategoryController, :index
   end
 
