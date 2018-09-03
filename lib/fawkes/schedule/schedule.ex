@@ -252,7 +252,11 @@ defmodule Fawkes.Schedule do
       ** (Ecto.NoResultsError)
 
   """
-  def get_talk!(id), do: Repo.get!(Talk, id)
+  def get_talk!(id) do
+    Talk
+    |> preload([:slot, :speakers, :categories, :audience, :location])
+    |> Repo.get!(id)
+  end
 
   @doc """
   Creates a talk.
