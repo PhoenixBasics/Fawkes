@@ -6,4 +6,7 @@ defmodule Fawkes.Schedule do
     Repo.all(Category)
   end
 
+  def category_changeset(changeset \\ %Category{}) do
+    Category.changeset(changeset, %{})
+  end
 end

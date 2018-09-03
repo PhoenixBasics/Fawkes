@@ -7,4 +7,7 @@ defmodule FawkesWeb.CategoryController do
     render(conn, "index.html", categories: categories)
   end
 
+  def new(conn, _params) do
+    render(conn, "new.html", changeset: Schedule.category_changeset())
+  end
 end
