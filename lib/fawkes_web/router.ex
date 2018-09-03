@@ -37,6 +37,11 @@ defmodule FawkesWeb.Router do
     resources "/", UserController, only: [:new, :create]
   end
 
+  scope "/login", FawkesWeb.Auth, as: :auth do
+    pipe_through :browser
+
+    resources "/", UserController, only: [:new, :create]
+  end
   # Other scopes may use custom stacks.
   # scope "/api", FawkesWeb do
   #   pipe_through :api

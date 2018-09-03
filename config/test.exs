@@ -17,3 +17,7 @@ config :fawkes, Fawkes.Repo,
   database: "fawkes_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+config :fawkes, FawkesWeb.Guardian.Tokenizer,
+                issuer: "fawkes",
+                secret_key: "Z2L35z4wt8M42zBDN9d4ckOQns4A3vT5yuFRIqQFXyEyWtxjoglhNdrm5WUTm/uQ"
