@@ -15,11 +15,11 @@ defmodule Fawkes.Membership do
     |> Repo.one()
   end
 
-  defp profile_changeset(%User{profile: profile}) when not is_nil(profile) do
+  def profile_changeset(%User{profile: profile}) when not is_nil(profile) do
     Profile.changeset(profile, %{})
   end
 
-  defp profile_changeset(user) do
+  def profile_changeset(user) do
     %Profile{}
     |> Profile.init_changeset(%{user_id: user.id, slug: "user_#{user.id}"})
     |> Repo.insert!()
