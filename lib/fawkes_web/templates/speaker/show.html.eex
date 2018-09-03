@@ -1,53 +1,22 @@
-<h2>Show Speaker</h2>
+<div class="container speaker-details">
+  <div class="card details">
+    <div class="card-body">
+      <img src="<%= Fawkes.Uploader.Image.url({@speaker.image, @speaker}) %>" class="rounded-circle speaker-details__pic">
+      <div class="clearfix"></div>
+      <div class="speaker__info">
+        <h4><%= FawkesWeb.SharedView.full_name(@speaker) %></h4>
+        <div class="speaker__handle">
+          <i class="fab fa-github"></i> @<%= @speaker.github %>
+        </div>
+        <div class="speaker__handle">
+          <i class="fab fa-twitter"></i> @<%= @speaker.twitter %>
+        </div>
+      </div>
+    </div>
+  </div>
 
-<ul>
+  <hr />
+  <h4 class="subheader">About</h4>
+  <p><%= @speaker.description %></p>
 
-  <li>
-    <strong>Slug:</strong>
-    <%= @speaker.slug %>
-  </li>
-
-  <li>
-    <strong>Image:</strong>
-    <%= @speaker.image %>
-  </li>
-
-  <li>
-    <strong>Image url:</strong>
-    <%= @speaker.image_url %>
-  </li>
-
-  <li>
-    <strong>First:</strong>
-    <%= @speaker.first %>
-  </li>
-
-  <li>
-    <strong>Last:</strong>
-    <%= @speaker.last %>
-  </li>
-
-  <li>
-    <strong>Company:</strong>
-    <%= @speaker.company %>
-  </li>
-
-  <li>
-    <strong>Github:</strong>
-    <%= @speaker.github %>
-  </li>
-
-  <li>
-    <strong>Twitter:</strong>
-    <%= @speaker.twitter %>
-  </li>
-
-  <li>
-    <strong>Description:</strong>
-    <%= @speaker.description %>
-  </li>
-
-</ul>
-
-<span><%= link "Edit", to: speaker_path(@conn, :edit, @speaker) %></span>
-<span><%= link "Back", to: speaker_path(@conn, :index) %></span>
+</div>
