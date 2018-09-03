@@ -192,4 +192,80 @@ defmodule Fawkes.ScheduleTest do
       assert %Ecto.Changeset{} = Schedule.change_talk(talk)
     end
   end
+
+  describe "profiles" do
+    alias Fawkes.Schedule.Speaker
+
+    @valid_attrs %{company: "some company", description: "some description", first: "some first", github: "some github", image: "some image", image_url: "some image_url", last: "some last", slug: "some slug", twitter: "some twitter"}
+    @update_attrs %{company: "some updated company", description: "some updated description", first: "some updated first", github: "some updated github", image: "some updated image", image_url: "some updated image_url", last: "some updated last", slug: "some updated slug", twitter: "some updated twitter"}
+    @invalid_attrs %{company: nil, description: nil, first: nil, github: nil, image: nil, image_url: nil, last: nil, slug: nil, twitter: nil}
+
+    def speaker_fixture(attrs \\ %{}) do
+      {:ok, speaker} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Schedule.create_speaker()
+
+      speaker
+    end
+
+    test "list_profiles/0 returns all profiles" do
+      speaker = speaker_fixture()
+      assert Schedule.list_profiles() == [speaker]
+    end
+
+    test "get_speaker!/1 returns the speaker with given id" do
+      speaker = speaker_fixture()
+      assert Schedule.get_speaker!(speaker.id) == speaker
+    end
+
+    test "create_speaker/1 with valid data creates a speaker" do
+      assert {:ok, %Speaker{} = speaker} = Schedule.create_speaker(@valid_attrs)
+      assert speaker.company == "some company"
+      assert speaker.description == "some description"
+      assert speaker.first == "some first"
+      assert speaker.github == "some github"
+      assert speaker.image == "some image"
+      assert speaker.image_url == "some image_url"
+      assert speaker.last == "some last"
+      assert speaker.slug == "some slug"
+      assert speaker.twitter == "some twitter"
+    end
+
+    test "create_speaker/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Schedule.create_speaker(@invalid_attrs)
+    end
+
+    test "update_speaker/2 with valid data updates the speaker" do
+      speaker = speaker_fixture()
+      assert {:ok, speaker} = Schedule.update_speaker(speaker, @update_attrs)
+      assert %Speaker{} = speaker
+      assert speaker.company == "some updated company"
+      assert speaker.description == "some updated description"
+      assert speaker.first == "some updated first"
+      assert speaker.github == "some updated github"
+      assert speaker.image == "some updated image"
+      assert speaker.image_url == "some updated image_url"
+      assert speaker.last == "some updated last"
+      assert speaker.slug == "some updated slug"
+      assert speaker.twitter == "some updated twitter"
+    end
+
+    test "update_speaker/2 with invalid data returns error changeset" do
+      speaker = speaker_fixture()
+      assert {:error, %Ecto.Changeset{}} = Schedule.update_speaker(speaker, @invalid_attrs)
+      assert speaker == Schedule.get_speaker!(speaker.id)
+    end
+
+    test "delete_speaker/1 deletes the speaker" do
+      speaker = speaker_fixture()
+      assert {:ok, %Speaker{}} = Schedule.delete_speaker(speaker)
+      assert_raise Ecto.NoResultsError, fn -> Schedule.get_speaker!(speaker.id) end
+    end
+
+    test "change_speaker/1 returns a speaker changeset" do
+      speaker = speaker_fixture()
+      assert %Ecto.Changeset{} = Schedule.change_speaker(speaker)
+    end
+  end
 end

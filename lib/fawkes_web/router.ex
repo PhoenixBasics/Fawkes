@@ -27,6 +27,7 @@ defmodule FawkesWeb.Router do
     resources "/audiences", AudienceController
     resources "/schedule_slots", SlotController
     resources "/talks", TalkController
+    resources "/speakers", SpeakerController
 
   end
 
