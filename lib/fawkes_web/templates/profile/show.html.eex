@@ -1,0 +1,26 @@
+<div class="container speaker-details">
+  <div class="card details">
+    <div class="card-body">
+      <img src="<%= Fawkes.Uploader.Image.url({@user.image, @user}) %>" class="rounded-circle speaker-details__pic">
+      <div class="clearfix"></div>
+      <div class="speaker__info">
+        <h4><%= FawkesWeb.SharedView.full_name(@user) %></h4>
+        <div class="speaker__handle">
+          <a href="https://github.com/<%= @user.github %>">
+            <i class="fab fa-github"></i> @<%= @user.github %>
+          </a>
+        </div>
+        <div class="speaker__handle">
+          <a href="https://twitter.com/<%= @user.twitter %>">
+            <i class="fab fa-twitter"></i> @<%= @user.twitter %>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+  <h4 class="subheader">About</h4>
+  <p><%= @user.description %></p>
+
+</div>

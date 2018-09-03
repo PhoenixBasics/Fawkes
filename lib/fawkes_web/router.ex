@@ -42,6 +42,7 @@ defmodule FawkesWeb.Router do
     resources "/schedule_slots", SlotController
     resources "/talks", TalkController
     resources "/speakers", SpeakerController
+    resources("/member", ProfileController, only: [:index, :show])
 
   end
 

@@ -1,0 +1,13 @@
+<div class="container speaker-index">
+  <h2 class="subheader">Members</h2>
+  <div class="row attendee">
+    <%= for profile <- @profiles do %>
+        <div class="card col-xs-4">
+          <div class="card-body ">
+            <img src="<%= Fawkes.Uploader.Image.url({profile.image, profile}) %>" class="rounded-circle">
+            <h4><%= link FawkesWeb.SharedView.full_name(profile), to: profile_path(@conn, :show, profile.slug) %></h4>
+          </div>
+        </div>
+    <% end %>
+  </div>
+</div>

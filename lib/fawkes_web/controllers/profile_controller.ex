@@ -18,4 +18,12 @@ defmodule FawkesWeb.ProfileController do
         render(conn, "edit.html", changeset: changeset)
     end
   end
+
+  def index(conn, _) do
+    render(conn, "index.html", profiles: Membership.fetch_user_profiles())
+  end
+
+  def show(conn, %{"id" => slug}) do
+    render(conn, "show.html", user: Membership.fetch_user_profile(slug))
+  end
 end

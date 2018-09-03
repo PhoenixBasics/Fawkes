@@ -31,4 +31,16 @@ defmodule Fawkes.Membership do
     |> Profile.changeset(params)
     |> Repo.update()
   end
+
+  def fetch_user_profiles do
+    Profile
+    |> order_by([profile], profile.last)
+    |> Repo.all()
+  end
+
+  def fetch_user_profile(slug) do
+    Profile
+    |> where([profile], profile.slug == ^slug)
+    |> Repo.one()
+  end
 end
