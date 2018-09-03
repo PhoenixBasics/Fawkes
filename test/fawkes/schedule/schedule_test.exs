@@ -128,4 +128,68 @@ defmodule Fawkes.ScheduleTest do
       assert %Ecto.Changeset{} = Schedule.change_slot(slot)
     end
   end
+
+  describe "talks" do
+    alias Fawkes.Schedule.Talk
+
+    @valid_attrs %{description: "some description", slug: "some slug", title: "some title"}
+    @update_attrs %{description: "some updated description", slug: "some updated slug", title: "some updated title"}
+    @invalid_attrs %{description: nil, slug: nil, title: nil}
+
+    def talk_fixture(attrs \\ %{}) do
+      {:ok, talk} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Schedule.create_talk()
+
+      talk
+    end
+
+    test "list_talks/0 returns all talks" do
+      talk = talk_fixture()
+      assert Schedule.list_talks() == [talk]
+    end
+
+    test "get_talk!/1 returns the talk with given id" do
+      talk = talk_fixture()
+      assert Schedule.get_talk!(talk.id) == talk
+    end
+
+    test "create_talk/1 with valid data creates a talk" do
+      assert {:ok, %Talk{} = talk} = Schedule.create_talk(@valid_attrs)
+      assert talk.description == "some description"
+      assert talk.slug == "some slug"
+      assert talk.title == "some title"
+    end
+
+    test "create_talk/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Schedule.create_talk(@invalid_attrs)
+    end
+
+    test "update_talk/2 with valid data updates the talk" do
+      talk = talk_fixture()
+      assert {:ok, talk} = Schedule.update_talk(talk, @update_attrs)
+      assert %Talk{} = talk
+      assert talk.description == "some updated description"
+      assert talk.slug == "some updated slug"
+      assert talk.title == "some updated title"
+    end
+
+    test "update_talk/2 with invalid data returns error changeset" do
+      talk = talk_fixture()
+      assert {:error, %Ecto.Changeset{}} = Schedule.update_talk(talk, @invalid_attrs)
+      assert talk == Schedule.get_talk!(talk.id)
+    end
+
+    test "delete_talk/1 deletes the talk" do
+      talk = talk_fixture()
+      assert {:ok, %Talk{}} = Schedule.delete_talk(talk)
+      assert_raise Ecto.NoResultsError, fn -> Schedule.get_talk!(talk.id) end
+    end
+
+    test "change_talk/1 returns a talk changeset" do
+      talk = talk_fixture()
+      assert %Ecto.Changeset{} = Schedule.change_talk(talk)
+    end
+  end
 end

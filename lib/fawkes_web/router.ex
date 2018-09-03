@@ -26,6 +26,8 @@ defmodule FawkesWeb.Router do
 
     resources "/audiences", AudienceController
     resources "/schedule_slots", SlotController
+    resources "/talks", TalkController
+
   end
 
   # Other scopes may use custom stacks.
