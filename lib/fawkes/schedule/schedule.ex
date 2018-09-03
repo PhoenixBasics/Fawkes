@@ -9,4 +9,10 @@ defmodule Fawkes.Schedule do
   def category_changeset(changeset \\ %Category{}) do
     Category.changeset(changeset, %{})
   end
+
+  def create_category(attrs \\ %{}) do
+    %Category{}
+    |> Category.changeset(attrs)
+    |> Repo.insert()
+  end
 end
