@@ -101,4 +101,13 @@ defmodule Fawkes.Agenda do
   def change_user_talk(%UserTalk{} = user_talk) do
     UserTalk.changeset(user_talk, %{})
   end
+
+  alias Fawkes.Schedule.Talk
+
+  def list_talk_for_user(user_id) do
+    Talk
+    |> preload([:slot, :speakers, :categories, :audience, :location])
+    |> join(:inner, [talk], user_talk in UserTalk, user_talk.talk_id == talk.id and user_talk.user_id == ^user_id)
+    |> Repo.all()
+  end
 end
