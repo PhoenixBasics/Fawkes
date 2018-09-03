@@ -60,3 +60,5 @@ config :fawkes, Fawkes.Repo,
 config :fawkes, FawkesWeb.Guardian.Tokenizer,
                 issuer: "fawkes",
                 secret_key: "Z2L35z4wt8M42zBDN9d4ckOQns4A3vT5yuFRIqQFXyEyWtxjoglhNdrm5WUTm/uQ"
+
+import_config "dev.secret.exs"
