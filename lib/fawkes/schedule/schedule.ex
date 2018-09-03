@@ -1,6 +1,7 @@
 defmodule Fawkes.Schedule do
   alias Fawkes.Repo
   alias Fawkes.Schedule.Category
+  import Ecto.Query
 
   def all_category do
     Repo.all(Category)
@@ -134,7 +135,11 @@ defmodule Fawkes.Schedule do
 
   """
   def list_schedule_slots do
-    Repo.all(Slot)
+    Slot
+    |> preload([:event, talks: [:slot, :speakers, :categories, :audience, :location]])
+    |> order_by(asc: :start_time)
+    |> Repo.all()
+    |> Enum.group_by(&(Timex.beginning_of_day(&1.start_time)))
   end
 
   @doc """
