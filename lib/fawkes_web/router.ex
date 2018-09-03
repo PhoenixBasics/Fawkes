@@ -63,8 +63,10 @@ defmodule FawkesWeb.Router do
 
     resources("/profile", ProfileController, only: [:edit, :update], singleton: true)
   end
-  # Other scopes may use custom stacks.
-  # scope "/api", FawkesWeb do
-  #   pipe_through :api
-  # end
+
+  scope "/api", FawkesWeb do
+    pipe_through [:api]
+
+    resources "/users_talks", UserTalkController, except: [:new, :edit]
+  end
 end
