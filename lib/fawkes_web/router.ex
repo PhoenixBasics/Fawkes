@@ -44,7 +44,7 @@ defmodule FawkesWeb.Router do
     resources "/speakers", SpeakerController
     resources("/member", ProfileController, only: [:index, :show])
     get "/agenda", AgendaController, :index
-
+    get "/agenda/:user_slug", AgendaController, :show
   end
 
   scope "/signup", FawkesWeb.Signup, as: :signup do
