@@ -23,6 +23,9 @@ defmodule FawkesWeb.Router do
     get "/categories/:id", CategoryController, :show
     delete "/categories/:id", CategoryController, :delete
     get "/categories", CategoryController, :index
+
+    resources "/audiences", AudienceController
+
   end
 
   # Other scopes may use custom stacks.
