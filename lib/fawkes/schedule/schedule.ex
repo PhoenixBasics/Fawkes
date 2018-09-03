@@ -330,8 +330,10 @@ defmodule Fawkes.Schedule do
       [%Speaker{}, ...]
 
   """
-  def list_profiles do
-    Repo.all(Speaker)
+  def list_speakers do
+    Speaker
+    |> preload(:talk)
+    |> Repo.all()
   end
 
   @doc """

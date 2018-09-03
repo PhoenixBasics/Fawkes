@@ -5,8 +5,8 @@ defmodule FawkesWeb.SpeakerController do
   alias Fawkes.Schedule.Speaker
 
   def index(conn, _params) do
-    profiles = Schedule.list_profiles()
-    render(conn, "index.html", profiles: profiles)
+    speakers = Schedule.list_speakers()
+    render(conn, "index.html", speakers: speakers)
   end
 
   def new(conn, _params) do
