@@ -64,4 +64,68 @@ defmodule Fawkes.ScheduleTest do
       assert %Ecto.Changeset{} = Schedule.change_audience(audience)
     end
   end
+
+  describe "schedule_slots" do
+    alias Fawkes.Schedule.Slot
+
+    @valid_attrs %{end_time: "2010-04-17 14:00:00.000000Z", slug: "some slug", start_time: "2010-04-17 14:00:00.000000Z"}
+    @update_attrs %{end_time: "2011-05-18 15:01:01.000000Z", slug: "some updated slug", start_time: "2011-05-18 15:01:01.000000Z"}
+    @invalid_attrs %{end_time: nil, slug: nil, start_time: nil}
+
+    def slot_fixture(attrs \\ %{}) do
+      {:ok, slot} =
+        attrs
+        |> Enum.into(@valid_attrs)
+        |> Schedule.create_slot()
+
+      slot
+    end
+
+    test "list_schedule_slots/0 returns all schedule_slots" do
+      slot = slot_fixture()
+      assert Schedule.list_schedule_slots() == [slot]
+    end
+
+    test "get_slot!/1 returns the slot with given id" do
+      slot = slot_fixture()
+      assert Schedule.get_slot!(slot.id) == slot
+    end
+
+    test "create_slot/1 with valid data creates a slot" do
+      assert {:ok, %Slot{} = slot} = Schedule.create_slot(@valid_attrs)
+      assert slot.end_time == DateTime.from_naive!(~N[2010-04-17 14:00:00.000000Z], "Etc/UTC")
+      assert slot.slug == "some slug"
+      assert slot.start_time == DateTime.from_naive!(~N[2010-04-17 14:00:00.000000Z], "Etc/UTC")
+    end
+
+    test "create_slot/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Schedule.create_slot(@invalid_attrs)
+    end
+
+    test "update_slot/2 with valid data updates the slot" do
+      slot = slot_fixture()
+      assert {:ok, slot} = Schedule.update_slot(slot, @update_attrs)
+      assert %Slot{} = slot
+      assert slot.end_time == DateTime.from_naive!(~N[2011-05-18 15:01:01.000000Z], "Etc/UTC")
+      assert slot.slug == "some updated slug"
+      assert slot.start_time == DateTime.from_naive!(~N[2011-05-18 15:01:01.000000Z], "Etc/UTC")
+    end
+
+    test "update_slot/2 with invalid data returns error changeset" do
+      slot = slot_fixture()
+      assert {:error, %Ecto.Changeset{}} = Schedule.update_slot(slot, @invalid_attrs)
+      assert slot == Schedule.get_slot!(slot.id)
+    end
+
+    test "delete_slot/1 deletes the slot" do
+      slot = slot_fixture()
+      assert {:ok, %Slot{}} = Schedule.delete_slot(slot)
+      assert_raise Ecto.NoResultsError, fn -> Schedule.get_slot!(slot.id) end
+    end
+
+    test "change_slot/1 returns a slot changeset" do
+      slot = slot_fixture()
+      assert %Ecto.Changeset{} = Schedule.change_slot(slot)
+    end
+  end
 end
