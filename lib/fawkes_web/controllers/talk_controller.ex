@@ -3,6 +3,7 @@ defmodule FawkesWeb.TalkController do
 
   alias Fawkes.Schedule
   alias Fawkes.Schedule.Talk
+  alias Fawkes.Agenda
 
   def index(conn, _params) do
     talks = Schedule.list_talks()
@@ -27,7 +28,8 @@ defmodule FawkesWeb.TalkController do
 
   def show(conn, %{"id" => id}) do
     talk = Schedule.get_talk!(id)
-    render(conn, "show.html", talk: talk)
+    users = Agenda.list_user_for_talk(id)
+    render(conn, "show.html", talk: talk, users: users)
   end
 
   def edit(conn, %{"id" => id}) do

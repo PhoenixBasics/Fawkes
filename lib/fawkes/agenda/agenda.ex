@@ -110,4 +110,11 @@ defmodule Fawkes.Agenda do
     |> join(:inner, [talk], user_talk in UserTalk, user_talk.talk_id == talk.id and user_talk.user_id == ^user_id)
     |> Repo.all()
   end
+
+  def list_user_for_talk(talk_id) do
+    Fawkes.Membership.User
+    |> join(:inner, [user], user_talk in UserTalk, user_talk.talk_id == ^talk_id)
+    |> preload(:profile)
+    |> Repo.all()
+  end
 end
