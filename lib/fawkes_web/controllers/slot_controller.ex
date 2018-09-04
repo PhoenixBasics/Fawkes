@@ -4,8 +4,8 @@ defmodule FawkesWeb.SlotController do
   alias Fawkes.Schedule
   alias Fawkes.Schedule.Slot
 
-  def index(conn, _params) do
-    schedule_slots = Schedule.list_schedule_slots()
+  def index(conn, params) do
+    schedule_slots = Schedule.list_schedule_slots(params["date"])
     render(conn, "index.html", schedule_slots: schedule_slots)
   end
 
