@@ -139,7 +139,11 @@ defmodule Fawkes.Schedule do
     |> preload([:event, talks: [:slot, :speakers, :categories, :audience, :location]])
     |> order_by(asc: :start_time)
     |> Repo.all()
-    |> Enum.group_by(&(Timex.beginning_of_day(&1.start_time)))
+    |> Enum.group_by(&get_day/1)
+  end
+
+  defp get_day(slot) do
+    Timex.beginning_of_day(slot.start_time)
   end
 
   @doc """

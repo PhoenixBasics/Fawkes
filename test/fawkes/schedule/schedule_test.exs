@@ -82,8 +82,21 @@ defmodule Fawkes.ScheduleTest do
     end
 
     test "list_schedule_slots/0 returns all schedule_slots" do
-      slot = slot_fixture()
-      assert Schedule.list_schedule_slots() == [slot]
+
+      date1 = Timex.parse!("2018-09-04 00:00:00Z", "{ISO:Extended:Z}")
+      date2 = Timex.parse!("2018-09-05 00:00:00Z", "{ISO:Extended:Z}")
+
+      slot1 = slot_fixture(start_time: date1, slug: "slug1")
+      slot2 = slot_fixture(start_time: date1, slug: "slug2")
+      slot3 = slot_fixture(start_time: date2, slug: "slug3")
+
+      expected_slots = %{date1 => [slot1, slot2],
+                          date2 => [slot2]}
+
+      actual_slots = Schedule.list_schedule_slots()
+
+      assert length(actual_slots[date1]) == length(expected_slots[date1])
+      assert length(actual_slots[date2]) == length(expected_slots[date2])
     end
 
     test "get_slot!/1 returns the slot with given id" do
